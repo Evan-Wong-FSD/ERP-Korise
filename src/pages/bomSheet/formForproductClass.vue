@@ -74,7 +74,6 @@
           :rules="[ val => (val !== null && val !== '') || '數量 輸入無效' ]"
         />
 
-        <!-- class="col-6" -->
         <q-select
           square
           outlined

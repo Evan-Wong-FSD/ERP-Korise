@@ -9,8 +9,6 @@
 </template>
 
 <script>
-// import invoiceRecordHeader from '../pages/invoiceRecordHeader.vue'
-// import invoiceRecordBody from '../pages/invoiceRecordBody.vue'
 import invoiceRecordHeader from './invoiceRecordHeader.vue'
 import invoiceRecordBody from './invoiceRecordBody.vue'
 export default {

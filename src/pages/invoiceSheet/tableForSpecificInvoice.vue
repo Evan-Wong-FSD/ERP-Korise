@@ -140,7 +140,6 @@ export default {
       this.$emit('switchTable', {
         showTableForWholeInvoice: true,
         showTableForSpecificInvoice: false
-        // settingInWholeTable: this.settingInWholeTable
       })
     },
     onUpdate (selected) {

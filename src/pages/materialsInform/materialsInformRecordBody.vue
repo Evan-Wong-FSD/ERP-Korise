@@ -102,13 +102,6 @@
               label="確定"
               class="border-radius-btn"
             />
-            <!-- <q-btn
-              size="lg"
-              flat
-              text-color="grey-10"
-              label="返回"
-              class="q-ml-sm border-radius-btn"
-            /> -->
           </div>
         </div>
       </q-form>
@@ -162,9 +155,6 @@ export default {
     }
   },
   mounted () {
-    // this.$socket.emit('initializeForRecord', {
-    //   taxIdNum: null
-    // })
     materialsInformtAPI.post('/api/initializeForRecord', { taxIdNum: null }).then((res) => {
       const { _idMaterialsInform, taxIdNums, firmName } = res.data
       this.initializedData._idMaterialsInform = _idMaterialsInform
@@ -173,9 +163,6 @@ export default {
     })
   },
   methods: {
-    // onItemClick (value) {
-    //   this.menuValue = value
-    // },
     onResize (size) {
       this.backgroundWidth = size.width
     },
@@ -187,7 +174,6 @@ export default {
     onSubmit () {
       var loopBreak = false
       Object.keys(this.materialsInform).forEach(elem => {
-        // const includeOptionalInput = elem !== '電壓' && elem !== '電流' && elem !== '頻率' && elem !== '輸出功率'
         if (loopBreak === false && this.materialsInform[elem] === '') {
           this.materialsInform[elem] = null
           if (elem === '電壓' || elem === '電流' || elem === '頻率' || elem === '輸出功率') {
@@ -197,14 +183,11 @@ export default {
         }
       })
       if (this.isValidBoolean) {
-        // const { _idFirmInform, taxIdNums } = this.initializedData
         this.$socket.emit('submit', {
-          // _idFirmInform: _idFirmInform[taxIdNums.findIndex(elem => elem === this.materialsInform.統編)],
           submitOperation: this.submitOperation,
           _id: this.materialsInformID,
           materialsInform: this.materialsInform
         })
-        // this.onReset()
         Object.keys(this.materialsInform).forEach(elem => {
           this.materialsInform[elem] = this.ternaryOperator('', null, elem, '統編', '公司名稱', '產品名稱', '電壓', '電流', '頻率', '輸出功率')
         })
@@ -289,11 +272,6 @@ export default {
     }
   },
   sockets: {
-    // initializeForRecord: function (backendData) {
-    //   this.initializedData._idMaterialsInform = backendData._idMaterialsInform
-    //   this.initializedData.taxIdNums = backendData.taxIdNums
-    //   this.initializedData.firmName = backendData.firmName
-    // },
     initializeForUpdated: function (backendData) {
       this.submitOperation = 'update'
       Object.keys(backendData.recordData).forEach(elem => {
@@ -310,28 +288,13 @@ export default {
         message: backendData.message
       })
     }
-    // taxIdNumExist: function (backendData) {
-    //   this.initializedData.class2 = backendData.class2
-    //   this.class2Options.splice(this.class2Options.length, 0, ...backendData.class2)
-    //   if (this.class2Options.length > 5) {
-    //     this.class2Options.splice(5, this.class2Options.length - 5)
-    //   }
-    // }
   },
   watch: {
     'materialsInform.統編': function (value) {
-      // const firmName = this.materialsInform.公司名稱
-      // if ((value !== '' && value !== null) && (firmName === '' || firmName === null)) {
-      // if (value !== '' && value !== null) {
       if (value && !this.materialsInform.公司名稱) {
         const { taxIdNums, firmName } = this.initializedData
-        // this.isValidBoolean = this.isValid('統編')
-        // if (this.isValidBoolean === true) {
         const taxIdNumsIndex = taxIdNums.findIndex(elem => elem === value)
         this.materialsInform.公司名稱 = firmName[taxIdNumsIndex]
-        // this.$socket.emit('initializeForRecord', {
-        //   taxIdNum: value
-        // })
         materialsInformtAPI.post('/api/initializeForRecord', { taxIdNum: value }).then((res) => {
           const { class2 } = res.data
           this.initializedData.class2 = class2
@@ -346,17 +309,10 @@ export default {
       // }
     },
     'materialsInform.公司名稱': function (value) {
-      // if (value !== '' && value !== null) {
       if (value && !this.materialsInform.統編) {
         const { taxIdNums, firmName } = this.initializedData
-        // this.isValidBoolean = this.isValid('公司名稱')
-        // if (this.isValidBoolean === true) {
-        // const taxIdNumsIndex = taxIdNums.findIndex(elem => elem === value)
         const firmNameIndex = firmName.findIndex(elem => elem === value)
         this.materialsInform.統編 = taxIdNums[firmNameIndex]
-        // this.$socket.emit('initializeForRecord', {
-        //   taxIdNum: value
-        // })
         materialsInformtAPI.post('/api/initializeForRecord', { taxIdNum: value }).then((res) => {
           const { class2 } = res.data
           this.initializedData.class2 = class2
@@ -365,14 +321,10 @@ export default {
             this.class2Options.splice(5, this.class2Options.length - 5)
           }
         })
-        // }
       } else if (!value) {
         this.materialsInform.統編 = ''
       }
     }
-    // 'materialsInform.產品名稱': function (value) {
-    //   this.isValidBoolean = this.isValid('產品名稱')
-    // }
   }
 }
 </script>

@@ -103,7 +103,6 @@
         <bomTable :typeOfFee="getTypeOfFee()" :onAddRowForFeesOnTable="onAddRowForFeesOnTable" />
       </q-step>
 
-      <!-- :done="step > arrproductClass.length + 3" -->
       <q-step
         :name="arrproductClass.length + 3"
         title="其他費用"
@@ -202,10 +201,6 @@ export default {
       const { projectName, projectDate } = this.project
       if (projectName && projectDate) {
         bomSheet.post('/api/deleteBomSheetRecord', { projectName: projectName, projectDate: projectDate }).then((res) => {
-          // const indexProjectNameInOptions = this.optionsProjectName.indexOf(projectName),
-          //   indexProjectDateInOptions = this.optionsProjectDate.indexOf(projectDate)
-          // this.optionsProjectName.splice(indexProjectNameInOptions, 1)
-          // this.optionsProjectDate.splice(indexProjectDateInOptions, 1)
           this.project.projectName = undefined
           this.project.projectDate = undefined
           this.getProjectNameAndDateOptions()

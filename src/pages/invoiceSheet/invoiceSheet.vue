@@ -31,12 +31,6 @@ export default {
     }
   },
   methods: {
-    // showTable (value) {
-    //   this.invoiceNum = value.invoiceNum
-    //   this.showTableForWholeInvoice = value.showTableForWholeInvoice
-    //   this.showTableForSpecificInvoice = value.showTableForSpecificInvoice
-    //   this.settingInWholeTable = value.settingInWholeTable
-    // },
     showSpecificTable (value) {
       this.invoiceNum = value.invoiceNum
       this.showTableForWholeInvoice = value.showTableForWholeInvoice

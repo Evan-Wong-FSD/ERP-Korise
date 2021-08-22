@@ -2,10 +2,7 @@
   <div id="container" class="my-font-medium bg-grey-1">
     <section>
       <q-form @submit="onSubmit" @reset="onReset" class="row justify-center q-gutter-lg">
-      <!-- <q-form class="row justify-center q-gutter-lg"> -->
         <div class="row justify-center q-gutter-lg">
-            <!-- :error="elem === '稅金' && materialsListInform.稅金 === '' ? true : false" -->
-            <!-- :error="ternaryOperator(error, false, elem, '稅金')" -->
           <q-input
             no-error-icon
             :style="`width: ${(backgroundWidth - 250) / 2}px;`"
@@ -93,7 +90,6 @@ export default {
       error: false,
       taxErrorMessage: "'稅金' 為空值",
       submitOperation: null,
-      // materialsInformId: null,
       materialsListID: null
     }
   },
@@ -110,17 +106,8 @@ export default {
       this.error = this.materialsListInform.稅金 === ''
       if (!this.error) {
         const materialsListInform = this.materialsListInform, { 單價, 折數 } = materialsListInform
-        // materialsListInform.materialsInformId = this.ternaryOperator(materialsListInform.materialsInformId, this.materialsInformId, this.materialsInformId, null)
-        // if (this.submitOperation === 'create') {
-        //   materialsListInform.materialsInformId = this.materialsInformId
-        // }
-        // materialsListInform.materialsInformId = this.ternaryOperator(this.materialsInformId, materialsListInform.materialsInformId, this.submitOperation, 'create')
         materialsListInform.日期 = date.formatDate(Date.now(), 'YYYY/M/D')
         materialsListInform.複價 = String(單價 * (折數 / 100))
-        console.log('this.submitOperation')
-        console.log(this.submitOperation)
-        console.log('materialsListInform')
-        console.log(materialsListInform)
         this.$socket.emit('submit', {
           _id: this.materialsListID,
           submitOperation: this.submitOperation,
@@ -138,12 +125,10 @@ export default {
   sockets: {
     initializeForRecordCreated: function (backendData) {
       this.submitOperation = 'create'
-      // this.materialsInformId = backendData.materialsInformId
       this.materialsListInform.materialsInformId = backendData.materialsInformId
     },
     initializeForRecordUpdated: function (backendData) {
       this.submitOperation = 'update'
-      // this.materialsListInform = backendData.materialsListInform
       Object.keys(backendData.materialsListInform).forEach(elem => {
         if (elem === '_id') {
           this.materialsListID = backendData.materialsListInform[elem]

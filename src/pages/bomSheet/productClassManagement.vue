@@ -1,29 +1,9 @@
 <template>
   <div class="q-pa-md my-font-medium bg-grey-1">
-    <!-- <q-btn-group spread>
-      <q-btn color="purple" label="常用清單" icon="timeline" @click="selCls = true, showList()" />
-      <q-btn color="purple" label="自訂類別" icon="visibility" @click="selCls = false, showCustom()" />
-    </q-btn-group>
-
-    <q-select v-show="selCls" v-model="productClassListSelected" :options="productClassOptionsInList" label="產品種類清單" />
-
-    <q-input v-show="!selCls" outlined v-model="productClassInput" label="產品種類" />
-
-    <q-btn v-show="!selCls" color="primary" label="加入一列" @click="addRow" /> -->
-
     <q-btn-group spread>
       <q-btn push label="常用清單" icon="description" :style="btnGroup.list ? 'background-color: #f2c037;' : 'background-color: #00bcd4;'" @click="btnGroup.list = true, btnGroup.custom = false, showList()" />
       <q-btn push label="自訂類別" icon="settings" :style="btnGroup.custom ? 'background-color: #f2c037;' : 'background-color: #00bcd4;'" @click="btnGroup.custom = true, btnGroup.list = false, showCustom()" />
     </q-btn-group>
-
-    <!-- 常用清單 -->
-    <!-- <q-select v-show="btnGroup.list" v-model="productClassListSelected" :options="productClassOptionsInList" label="常用清單" /> -->
-
-    <!-- 自訂類別 -->
-    <!-- <div class="row justify-between">
-      <q-input v-show="btnGroup.custom" outlined v-model="productClassInput" label="產品種類" class="col-10" />
-      <q-btn v-show="btnGroup.custom" color="primary" label="加入一列" @click="addRow()" class="col-1" />
-    </div> -->
 
     <q-table
       :data="data"
@@ -51,10 +31,7 @@
         <!-- q-gutter-md -->
         <div class="row justify-between" style="width: 37vw;">
           <q-select dense outlined bg-color="grey-4" v-model="productClassListSelected" :options="productClassOptionsInList" label="常用清單" v-show="btnGroup.list" class="col-3" />
-          <!-- <q-input dense outlined bg-color="grey-4" v-model="productClassSelectedFromDB" label="產品種類" :class="btnGroup.custom ? 'col-5' : 'col-4'" /> -->
 
-          <!-- :style="`width: ${(backgroundWidth - 250) / 2}px;`" -->
-          <!-- @input="getRespectiveValueByTaxIdNum()" -->
           <q-select
             dense
             no-error-icon
@@ -151,11 +128,8 @@
 </template>
 
 <script>
-// import { bomSheet } from 'boot/axios'
 import { Notify, SessionStorage } from 'quasar'
 import { ProductClassificationAPI, bomSheet } from 'boot/axios'
-// import Vue from 'vue'
-// import VueSocketIO from 'vue-socket.io'
 export default {
   props: ['operation', 'returnBackFirstPage', 'arrproductClass', 'bomTablePreview'],
   data () {
@@ -163,8 +137,6 @@ export default {
       dataSelected: [],
       productClassListSelected: null,
       productClassOptionsInList: [],
-      // productClassInput: '',
-      // productClassSelectedFromDB: '',
       productClassSelectedFromDB: '',
       productClassOptionsFromDB: [],
       customSheetNameInput: '',
@@ -176,27 +148,10 @@ export default {
         field: '產品種類'
       }],
       data: [],
-      // selCls: false,
       btnGroup: {
         list: false,
         custom: false
       },
-      // informFromDB: [{
-      //   name: '1st',
-      //   subArr: [
-      //     '設備',
-      //     '設備1',
-      //     '設備2'
-      //   ]
-      // },
-      // {
-      //   name: '2ND',
-      //   subArr: [
-      //     '設備00',
-      //     '設備001',
-      //     '設備002'
-      //   ]
-      // }],
       informFromDB: [],
       dialog: {
         list: {
@@ -210,17 +165,10 @@ export default {
     }
   },
   mounted () {
-    // Vue.use(new VueSocketIO({
-    //   debug: true,
-    //   // 服務器端地址
-    //   connection: 'http://localhost:3006',
-    //   vuex: {}
-    // }))
     if (SessionStorage.has('btnGroupInproductClassManagement')) {
       this.btnGroup = SessionStorage.getItem('btnGroupInproductClassManagement')
     }
     loadData('arrproductClass', this.data)
-    // loadData('informFromDB', this.informFromDB)
     bomSheet.post('/api/getInformFromDB').then((res) => {
       res.data.informFromDB.forEach(elem => {
         this.informFromDB.splice(this.informFromDB.length, 0, elem)
@@ -229,7 +177,6 @@ export default {
   },
   methods: {
     addRow () {
-      // if (this.productClassInput) {
       if (this.productClassSelectedFromDB) {
         if (!arrproductClassData(this.data).includes(this.productClassSelectedFromDB)) {
           this.data.splice(this.data.length, 0, { 產品種類: this.productClassSelectedFromDB })
@@ -250,12 +197,10 @@ export default {
     },
     showList () {
       this.productClassListSelected = null
-      // this.data.splice(0, this.data.length)
       this.productClassOptionsInList.splice(0, this.productClassOptionsInList.length, ...arrNameInInformFromDB(this.informFromDB))
     },
     showCustom () {
       this.productClassSelectedFromDB = ''
-      // this.data.splice(0, this.data.length)
     },
     openDeleteOnTableDialog () {
       if (this.dataSelected.length > 0) {
@@ -287,16 +232,6 @@ export default {
     },
     deleteTableData () {
       if (this.dataSelected.length > 0) {
-        // if (SessionStorage.has('dataInBomSheet')) {
-        //   const dataInBomSheet = SessionStorage.getItem('dataInBomSheet')
-        //   const indexproductClassDeletedInproductClassManagement = this.data.findIndex(elem => elem.產品種類 === this.dataSelected[0].產品種類)
-        //   const respectiveIndexproductClassInBomSheet = dataInBomSheet.findIndex(elem => elem.column1 === this.data[indexproductClassDeletedInproductClassManagement].產品種類)
-        //   const indexsRemoved = this.data[indexproductClassDeletedInproductClassManagement + 1]
-        //     ? dataInBomSheet.findIndex(elem => elem.column1 === this.data[indexproductClassDeletedInproductClassManagement + 1].產品種類) - respectiveIndexproductClassInBomSheet
-        //     : dataInBomSheet.length - respectiveIndexproductClassInBomSheet
-        //   dataInBomSheet.splice(respectiveIndexproductClassInBomSheet, indexsRemoved)
-        //   SessionStorage.set('dataInBomSheet', dataInBomSheet)
-        // }
         deleteDataElem(this.data, this.dataSelected)
         this.data.splice(specificproductClassIndex(this.data, this.dataSelected[0].產品種類), 1)
         SessionStorage.set('arrproductClass', this.data)
@@ -382,10 +317,6 @@ export default {
         })
       } else if (value === 'pending') {
         if (this.data.length > 0) {
-          // this.$emit('getBasicInformData', {
-          //   key: 'arrproductClass',
-          //   value: this.data.map(elem => { return elem.產品種類 })
-          // })
           SessionStorage.set('arrproductClass', this.data)
           SessionStorage.set('informFromDB', this.informFromDB)
           SessionStorage.set('btnGroupInproductClassManagement', this.btnGroup)
@@ -419,7 +350,6 @@ function deleteDataElem (data, dataSelected) {
       respectiveIndexproductClassInBomSheet = dataInBomSheet.findIndex(elem => elem.column1 === data[indexproductClassDeletedInproductClassManagement].產品種類),
       indexsRemoved = data[indexproductClassDeletedInproductClassManagement + 1]
         ? dataInBomSheet.findIndex(elem => elem.column1 === data[indexproductClassDeletedInproductClassManagement + 1].產品種類) - respectiveIndexproductClassInBomSheet
-        // : dataInBomSheet.length - respectiveIndexproductClassInBomSheet
         : dataInBomSheet.findIndex(elem => elem.column1 === '運費') - respectiveIndexproductClassInBomSheet
     dataInBomSheet.splice(respectiveIndexproductClassInBomSheet, indexsRemoved)
     SessionStorage.set('dataInBomSheet', dataInBomSheet)
@@ -444,13 +374,11 @@ function specificproductClassIndexInInformFromDB (subArr, productClassSelectedIn
 }
 
 function specificproductClassOPtionIndex (productClassOptionsInList, productClassListSelected) {
-  // return productClassOptionsInList.findIndex(elem => elem === productClassListSelected)
   return productClassOptionsInList.indexOf(productClassListSelected)
 }
 
 function specificNameIndexInInformFromDB (informFromDB, productClassListSelected) {
   return informFromDB.findIndex(elem => elem.name === productClassListSelected)
-  // return informFromDB.indexOf(productClassListSelected)
 }
 
 function arrNameInInformFromDB (informFromDB) {
@@ -461,7 +389,6 @@ function arrNameInInformFromDB (informFromDB) {
 
 function specificproductClassIndex (data, productClassSelectedInData) {
   return data.findIndex(elem => elem.產品種類 === productClassSelectedInData)
-  // return data.indexOf(productClassSelectedInData)
 }
 
 function arrproductClassData (data) {

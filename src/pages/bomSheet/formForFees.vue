@@ -14,8 +14,6 @@
       />
 
       <div class="row justify-center">
-        <!-- :rules="[ val => (val !== null || val !== '') || '數量 為空值' ]" -->
-        <!-- v-model="數量" -->
         <q-input
           square
           outlined
@@ -33,7 +31,6 @@
           :key="index"
         />
 
-        <!-- :rules="[ val => (val !== '運費' && val !== '其他費用') || '備註 輸入無效' ]" -->
         <q-input
           square
           outlined
@@ -67,9 +64,6 @@ export default {
   },
   watch: {
     resetFormForFees (value) {
-      // Object.keys(this.formDataForFees).forEach(elem => {
-      //   this.formDataForFees[elem] = undefined
-      // })
       onReset(this.formDataForFees)
     },
     clickAddRowForFeesOnTable (value) {

@@ -10,9 +10,7 @@
         <q-list>
           <q-item clickable v-close-popup @click="onItemClick(elem)" v-model="menuValue" v-for="(elem, index) in menuOption" :key="index">
             <q-item-section>
-              <!-- <router-link :to="elem === '記錄' ? '/廠商資料' : `/廠商資料${elem}`"> -->
               <q-item-label class="my-font-medium text-grey-10">{{elem}}</q-item-label>
-              <!-- </router-link> -->
             </q-item-section>
           </q-item>
         </q-list>

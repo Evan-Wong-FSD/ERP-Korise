@@ -1,13 +1,8 @@
 <template>
   <div id="container" class="my-font-medium bg-grey-1">
     <section>
-      <!-- @submit="onSubmit" @reset="onReset" -->
       <q-form class="row justify-center q-gutter-lg">
         <div class="row justify-center q-gutter-lg">
-          <!-- :rules="ternaryOperator([''], [ val => val !== null && val.length > 0 || `'${elem1}' 為空值`], elem1, ['日期'])" -->
-          <!-- :type="ternaryOperator('number', 'text', elem1, ['聯絡人電話', '傳真'])" -->
-          <!-- ddd
-          {{basicInform}} -->
           <q-input
             no-error-icon
             :style="`width: ${(backgroundWidth - 250) / 2}px;`"
@@ -38,9 +33,6 @@
                 </q-popup-proxy>
               </div>
 
-              <!-- :error="isError(elem1)" -->
-              <!-- @filter="filterOptions" -->
-              <!-- @focus="focusSelect = elem1" -->
               <q-select
                 no-error-icon
                 use-input
@@ -193,7 +185,6 @@ export default {
     isError (elem1) { // 只要有設 'error' 參數，'error'會把所有 elem 代進來
       let Break = false
       Object.keys(this.basicInform).forEach(elem2 => { // 不能包成 function 因為 booleanIsValid 和 Break 代進去沒法變更value
-        // if (!Break && (elem1 !== '備註 (選填)' && elem1 !== 'blank') && (elem2 === elem1)) {
         if (!Break && (elem2 === elem1)) {
           this.booleanIsValid = Boolean(this.basicInform[elem2])
           if (this.basicInform[elem2] === '' || this.basicInform[elem2] === null) {
@@ -209,16 +200,6 @@ export default {
     insertBasicInform: function (backendData) {
       bomSheet.post('/api/insertBasicInform', { basicInform: this.basicInform })
     }
-    // importBasicInform (backendData) {
-    //   // bomSheet.post('/api/importBasicInform', backendData).then((res) => {
-    //   // const dataBasicInform = res.data.basicInform
-    //   const { basicInform } = backendData
-    //   Object.keys(this.basicInform).forEach(elem => {
-    //     Vue.set(this.basicInform, elem, basicInform[elem])
-    //   })
-    //   this.booleanIsValid = true
-    //   // })
-    // }
   },
   watch: {
     operation (value) {

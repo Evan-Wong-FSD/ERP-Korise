@@ -1,28 +1,6 @@
 <template>
   <div class="my-font-medium">
-    <!-- <header class="row justify-between q-px-lg q-pt-lg">
-      <div>
-        <h1 class="text-h4 text-grey-10 text-center">材料資料</h1>
-        <div style="width: 215.124px; border-top: 6px solid #00bcd4; width: 215.124px; margin-top: 10px;" />
-      </div>
-
-      <q-btn-dropdown unelevated size="lg" color="mainColor" :ripple="false" :label="menuValue" class="border-radius-btn-dropdown">
-        <q-list>
-          <q-item clickable v-close-popup @click="onItemClick(elem)" v-model="menuValue" v-for="(elem, index) in menuOption" :key="index">
-            <q-item-section>
-              <router-link :to="elem === '記錄' ? '/材料資料' : `/材料資料${elem}`">
-                <q-item-label class="my-font-medium text-grey-10">{{elem}}</q-item-label>
-              </router-link>
-            </q-item-section>
-          </q-item>
-        </q-list>
-      </q-btn-dropdown>
-    </header>
-
-    <br> -->
-
     <section>
-      <!-- 高度要再做調整 -->
       <q-table
         flat
         :data="data"
@@ -96,7 +74,6 @@ export default {
         項目: null,
         code: null
       },
-      // rowsData: null,
       pagination: {
         sortBy: '統編',
         descending: false,
@@ -106,7 +83,6 @@ export default {
       },
       columnsHeader: ['統編', '公司名稱', '產品名稱', '型號', '描述', '電壓', '電流', '頻率', '輸出功率', '規格', '特性', '料號'],
       columns: [
-        // 不需要sortable
         {
           name: '統編',
           label: '統編',
@@ -207,7 +183,6 @@ export default {
         })
         // emulate server
         // update rowsCount with appropriate value
-        // this.rowsData = rowsData
         this.pagination.rowsNumber = this.getRowsNumberCount(this.filter, rowsData, sortBy)
         // get all rows if "All" (0) is selected
         const fetchCount = rowsPerPage === 0 ? this.pagination.rowsNumber : rowsPerPage
@@ -241,7 +216,6 @@ export default {
       }
       let count = 0
       rowsData.forEach(elem => {
-        // sortBy需再設定
         if (elem[sortBy].toString().includes(filter)) {
           ++count
         }
@@ -308,7 +282,6 @@ export default {
 <style lang="sass">
 .materialsInformSheet
   /* height or max-height is important */
-  // height: 743px
   height: 80vh
   .q-table__top,
   .q-table__bottom,
@@ -318,43 +291,26 @@ export default {
     /* higher than z-index for td below */
     z-index: 2
     /* bg color is important; just specify one */
-    // background: #fff
-    // grey
     background-color: #bdbdbd
-
-  // thead tr:last-child th
-  //   /* height of all previous header rows */
-  //   top: 48px
-  //   /* highest z-index */
-  //   z-index: 3
-  //   // warning
-  //   background-color: #f2c037
 
   thead tr:first-child th
     top: 0
     z-index: 1
-    // grey
     background-color: #bdbdbd
 
   tr:first-child th:first-child, tr:first-child th:nth-child(2), tr:first-child th:nth-child(3), tr:first-child th:nth-child(4), tr:first-child th:nth-child(5)
     /* highest z-index */
     z-index: 3
-    // grey
-    // background-color: #bdbdbd
 
   td
-    // grey-2
     background-color: #f5f5f5
 
   td:first-child, td:nth-child(2), td:nth-child(3), td:nth-child(4), td:nth-child(5)
     z-index: 1
-    // accent
-    // background-color: #9c27b0
 
   td:first-child, th:first-child
     position: sticky
     left: 0
-    // grey-4
     background-color: #e0e0e0
     max-width: 4.5rem
     min-width: 4.5rem
@@ -364,7 +320,6 @@ export default {
     left: 4.5rem
     max-width: 6rem
     min-width: 6rem
-    // grey-4
     background-color: #e0e0e0
 
   td:nth-child(3), th:nth-child(3)
@@ -372,7 +327,6 @@ export default {
     left: 10.5rem
     max-width: 6rem
     min-width: 6rem
-    // grey-4
     background-color: #e0e0e0
 
   td:nth-child(4), th:nth-child(4)
@@ -380,7 +334,6 @@ export default {
     left: 16.5rem
     max-width: 6rem
     min-width: 6rem
-    // grey-4
     background-color: #e0e0e0
 
   td:nth-child(5), th:nth-child(5)
@@ -388,6 +341,5 @@ export default {
     left: 22.5rem
     max-width: 6rem
     min-width: 6rem
-    // grey-4
     background-color: #e0e0e0
 </style>

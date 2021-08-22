@@ -3,7 +3,6 @@
     <section>
       <strong style="display: flex; justify-content: center; font-size: 1.25rem;" v-if="setDuration && dateSelected">{{`自選期間：${showDateTooltip()}`}}</strong>
       <strong style="display: flex; justify-content: center; font-size: 1.25rem;" v-if="accountPeriod.open">{{`會計期間：{ 年份：${accountPeriod.year}；期間：${accountPeriod.period} }`}}</strong>
-      <!-- 高度要再做調整 -->
       <q-table
         flat
         :data="data"
@@ -50,9 +49,6 @@
             </div>
 
             <q-btn-dropdown label="會計期間" icon="schedule" class="text-grey-2" :style="accountPeriod.open ? 'background-color: #f2c037;' : 'background-color: #00bcd4;'">
-              <!-- <q-tooltip class="bg-amber text-black shadow-4" :offset="[10, 10]" v-if="accountPeriod.open">
-                {{`年份：${accountPeriod.year}；期間：${accountPeriod.period}`}}
-              </q-tooltip> -->
               <q-toggle class="absolute-top-right " v-model="accountPeriod.open" @input="setDuration = false" />
 
               <br>
@@ -288,14 +284,6 @@ export default {
     }
   },
   mounted () {
-    // (async () => {
-    //   // await this.onAPI('getRowsDataForWholeInvoice')
-    //   // this.onRequest({
-    //   //   pagination: this.pagination
-    //   //   // filter: this.filter
-    //   // })
-    //   await this.fetch('getRowsDataForWholeInvoice')
-    // })()
     const getMonth = new Date().getMonth()
     this.accountPeriod.period = getMonth % 2 === 0 ? this.periodOptions[getMonth / 2] : this.periodOptions[(getMonth - 1) / 2] // 計算出當月所屬期數
     if (this.settingInWholeTable) {
@@ -328,7 +316,6 @@ export default {
         },
         invoiceType: {
           active: this.invoiceType.length === 1,
-          // active: Boolean(this.invoiceType),
           value: this.invoiceType
         },
         accountPeriod: {
@@ -344,21 +331,11 @@ export default {
     },
     async onAPI (url) {
       await invoiceSheetAPI.post(`/api/${url}`, this.getAPIdata()).then((res) => {
-        // const { year, period } = this.accountPeriod
-        // this.rowData = this.invoiceType.length === 1
-        //   ? res.data.rowData.filter(elem => elem.進銷項 === this.invoiceType[0])
-        //   : res.data.rowData
-        // this.rowData = this.accountPeriod.open
-        //   ? this.rowData.filter(elem => elem.期年 === String(year) && elem.期數 === period)
-        //   : this.rowData
         this.rowData.splice(0, this.rowData.length, ...res.data.rowData)
-        console.log('res.data.rowData')
-        console.log(res.data.rowData)
       })
     },
     onRequest (props) {
       var { page, rowsPerPage, sortBy, descending } = props.pagination
-      // const filter = props.filter
       this.loading = true
       if (this.setDuration) {
         rowsPerPage = 0
@@ -366,17 +343,14 @@ export default {
       }
       // emulate server
       // update rowsCount with appropriate value
-      // this.pagination.rowsNumber = this.getRowsNumberCount(this.filter, this.rowData, this.tableSearchKey)
       this.pagination.rowsNumber = this.rowData.length
       // get all rows if "All" (0) is selected
       const fetchCount = rowsPerPage === 0 ? this.pagination.rowsNumber : rowsPerPage
       // calculate starting row of data
       const startRow = (page - 1) * rowsPerPage
       // fetch data from "server"
-      // const returnedData = this.fetchFromServer(startRow, fetchCount, this.filter, sortBy, descending, this.rowData, this.tableSearchKey)
       const returnedData = this.fetchFromServer(startRow, fetchCount, sortBy, descending, this.rowData)
       // clear out existing data and add new
-      // this.data.splice(0, this.data.length, ...returnedData)
       this.data.splice(0, this.data.length, ...addTotalAmount(returnedData))
       // don't forget to update local pagination object
       this.pagination.page = page
@@ -388,11 +362,7 @@ export default {
     },
     // emulate ajax call
     // SELECT * FROM ... WHERE...LIMIT...
-    // fetchFromServer (startRow, count, filter, sortBy, descending, rowData, tableSearchKey) {
     fetchFromServer (startRow, count, sortBy, descending, rowData) {
-      // const data = filter
-      //   ? rowData.filter(row => row[tableSearchKey].toString().toUpperCase().includes(filter.toString().toUpperCase()))
-      //   : rowData
       if (sortBy) {
         const sortFn = sortBy === '時間'
           ? (descending
@@ -407,20 +377,6 @@ export default {
       }
       return rowData.slice(startRow, startRow + count)
     },
-    // emulate 'SELECT count(*) FROM ...WHERE...'
-    // getRowsNumberCount (filter, rowData, tableSearchKey) {
-    //   if (!filter) {
-    //     return rowData.length
-    //   }
-    //   let count = 0
-    //   rowData.forEach(elem => {
-    //     // sortBy需再設定
-    //     if (elem[tableSearchKey].toString().includes(filter)) {
-    //       ++count
-    //     }
-    //   })
-    //   return count
-    // },
     newDate () {
       return date.formatDate(Date.now(), 'YYYY/MM/DD')
     },
@@ -438,7 +394,6 @@ export default {
       })
     },
     dateSelectedOffToggle () {
-      // this.accountPeriod.open = true
       this.setDuration = false
       this.onRequest({
         pagination: this.pagination,
@@ -543,12 +498,6 @@ export default {
     },
     accountPeriod: {
       handler: function (newValue, oldValue) {
-        // if (this.accountPeriod.open) {
-        //   this.onRequest({
-        //     pagination: this.pagination,
-        //     filter: this.filter
-        //   })
-        // }
         (async () => {
           await this.fetch('getRowsDataBySetting')
         })()

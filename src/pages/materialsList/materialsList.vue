@@ -99,7 +99,6 @@
                       </div>
                     </q-dialog>
 
-                    <!-- <q-btn color="white" text-color="black" label="更新" class="q-mx-md" @click="onUpdate(tableSelected)" /> -->
                     <q-btn color="white" text-color="black" label="更新" class="q-mx-md" @click="onUpdate()" />
                     <q-dialog v-model="updateBtn">
                       <div style="max-width: 80vw; width:100%;">
@@ -108,7 +107,6 @@
                     </q-dialog>
 
                     <q-btn color="white" text-color="black" label="剛除" @click="deleteConfirm = tableSelected.length > 0 ? true : false" />
-                    <!-- <q-btn color="white" text-color="black" label="剛除" /> -->
                     <q-dialog v-model="deleteConfirm" persistent>
                       <q-card class="bg-grey-4">
                         <q-card-section class="row items-center">
@@ -159,14 +157,7 @@ export default {
       treeSelected: '',
       tableSelected: [],
       tableSearchKey: '日期',
-      // expanded: ['產品名稱'],
-      simple: [
-        // {
-        //   label: '產品名稱',
-        //   header: 'class2',
-        //   children: []
-        // }
-      ],
+      simple: [],
       treeData: null,
       pagination: {
         sortBy: '日期',
@@ -276,8 +267,6 @@ export default {
       this.loading = true
       let rowsData = null
       const treeData = this.treeData, treeSelected = this.treeSelected
-      console.log('treeData')
-      console.log(treeData)
       await materialsListAPI.post('/api/getRowsData', { materialsInformId: treeData.find(elem => elem.產品名稱 === this.expandedKeys[0] && elem.型號 === treeSelected)._id }).then((res) => {
         rowsData = res.data.rowsData
       })
@@ -354,8 +343,6 @@ export default {
       }
     },
     onDelete (tableSelected) {
-      console.log('tableSelected[0]._id')
-      console.log(tableSelected[0]._id)
       this.$socket.emit('delete', {
         tableSelectedID: tableSelected[0]._id
       })
@@ -371,8 +358,6 @@ export default {
   },
   watch: {
     treeSelected: function (value) {
-      console.log('treeSelected')
-      console.log(value)
       if (this.treeData.some(elem => elem.產品名稱 === this.expandedKeys[0] && elem.型號 === value)) {
         this.onRequest({
           pagination: this.pagination,
@@ -394,8 +379,6 @@ export default {
     }
   }
 }
-// async function refreshTable (initializeForTree, onRequest, message) {
-//   await initializeForTree()
 function refreshTable (initializeForTree, onRequest, parameterPagination, message) {
   initializeForTree()
   onRequest({
@@ -415,12 +398,10 @@ function refreshTable (initializeForTree, onRequest, parameterPagination, messag
 <style lang="sass">
 .materialsListTable
   /* height or max-height is important */
-  // height: 743px
   height: 80vh
   .q-table__top,
   .q-table__bottom,
   thead tr:first-child th /* bg color is important for th; just specify one */
-    // background-color: #fff
     background-color: #bdbdbd
   thead tr th
     position: sticky

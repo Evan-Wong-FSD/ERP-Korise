@@ -1,6 +1,5 @@
 <template>
   <div class="my-font-medium">
-    <!-- style="height: 400px" -->
     <q-table
       :data="data"
       :columns="columns"
@@ -41,8 +40,6 @@
       </template>
 
       <template v-slot:body="propsBody">
-        <!-- <q-tr :propsBody="propsBody" :key="propsBody.pageIndex">
-          {{propsBody}} -->
         <q-tr v-if="propsBody.pageIndex === 0" :propsBody="propsBody" :key="propsBody.pageIndex">
           <q-td class="text-center text-bold" style="font-size: 1.25rem;" colspan="8" :propsBody="propsBody" v-for="(elem, index) in Object.keys(propsBody.row)" :key="index">
             {{propsBody.row[elem]}}
@@ -94,14 +91,6 @@
             <div v-if="index !== 6">{{propsBody.row[elem]}}</div>
           </q-td>
         </q-tr>
-
-        <!-- </q-tr> -->
-
-        <!-- <q-tr v-if="propsBody.pageIndex > 4" :propsBody="propsBody" :key="propsBody.pageIndex">
-          <q-td :propsBody="propsBody" v-for="(elem, index) in Object.keys(propsBody.row)" :key="index">
-            {{propsBody.row[elem]}}
-          </q-td>
-        </q-tr> -->
       </template>
     </q-table>
   </div>
@@ -163,14 +152,6 @@ export default {
         this.data.splice(0, this.data.length, ...[...dataElemFirstSection, ...tableData])
       } else if (this.data.length === 0) {
         const arrproductClass = SessionStorage.getItem('arrproductClass'),
-          // { 工程名稱, 時間, 聯絡人名稱, 聯絡人電話, 傳真 } = SessionStorage.getItem('basicInform'),
-          // dataElemFirstSection = [
-          //   { column0: '瑋安企業有限公司' },
-          //   { column0: '物  料  清  單' },
-          //   { column0: `工程名稱：${工程名稱}`, column1: `日期：${時間}` },
-          //   { column0: `連絡人：${聯絡人名稱}`, column1: `客戶電話：${聯絡人電話}`, column2: `客戶傳真：${傳真}` },
-          //   { column0: '項次', column1: '名稱內容', column2: '規格', column3: '數量', column4: '單價', column5: '複價', column6: '小計', column7: '備註' }
-          // ],
           dataElemSecondSection = arrproductClass.map((elem, index) => {
             return { column0: index + 1, column1: elem.產品種類, column2: null, column3: null, column4: null, column5: null, column6: null, column7: null }
           }),
@@ -195,7 +176,6 @@ export default {
           }
         })
         this.data.splice(5, this.data.length - 5, ...dataInBomSheet)
-        // this.data.splice(this.data.length, 0, ...dataInBomSheet)
       }
     })
   },
@@ -205,9 +185,6 @@ export default {
           return elem.column6
         }),
         getTotalRate = allValueInColumn6.reduce((total, elem) => {
-          // total = total === null ? 0 : parseFloat(total)
-          // elem = elem === null ? 0 : parseFloat(elem)
-          // return total + elem
           return Number(total) + Number(elem)
         })
       return getTotalRate.toFixed(3)
@@ -236,13 +213,6 @@ export default {
       SessionStorage.set('dataInBomSheet', this.data.slice(5))
     },
     exportExcel () {
-      // bomSheet.request({
-      //   url: '/api/exportExcel',
-      //   method: 'post',
-      //   data: {
-      //     tableData: this.data
-      //   }
-      // })
       if (this.data.length > 0) {
         bomSheet.post('/api/exportExcel', { tableData: this.data }).then((res) => {
           const { 工程名稱, 時間 } = SessionStorage.getItem('basicInform')
@@ -265,11 +235,6 @@ export default {
       }
     }
   },
-  // sockets: {
-  //   importBomSheetRecord (backendData) {
-  //     this.data.splice(0, this.data.length, ...backendData.tableData)
-  //   }
-  // },
   watch: {
     onAddRowForproductClassOnTable (value) {
       if (SessionStorage.has('formDataForproductClass')) {

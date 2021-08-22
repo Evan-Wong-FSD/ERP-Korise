@@ -10,7 +10,6 @@
     <br>
 
     <section>
-      <!-- 高度要再做調整 -->
       <q-table
         flat
         :data="data"
@@ -39,10 +38,6 @@
 
         <template v-slot:top-right>
           <div class="row q-gutter-md">
-            <!-- <q-input dense outlined v-model="產品名稱" bg-color="grey-4" label="統編" />
-            <q-input dense outlined v-model="產品名稱" bg-color="grey-4" label="廠商" /> -->
-            <!-- <q-input dense outlined v-model="產品名稱" bg-color="grey-4" label="產品名稱" />
-            <q-input dense outlined v-model="code" bg-color="grey-4" label="code" /> -->
             <q-select
               dense
               outlined
@@ -102,14 +97,6 @@
             <q-resize-observer @resize="topRightResize" />
           </div>
         </template>
-
-        <!-- <template v-slot:body="props">
-          <q-tr :props="props">
-            <q-td :props="props" :style="tableDataStyle(props.pageIndex)" v-for="elem in columns" :key="elem.name">
-              {{ props.row[elem.name] }}
-            </q-td>
-          </q-tr>
-        </template> -->
       </q-table>
     </section>
   </div>
@@ -130,10 +117,7 @@ export default {
     return {
       filter: '',
       loading: false,
-      // 產品名稱: null,
-      // code: null,
       input: {
-        // 統編: null,
         產品種類: null,
         產品名稱: null,
         code: null
@@ -146,11 +130,9 @@ export default {
         rowsPerPage: 6,
         rowsNumber: 10
       },
-      // columnFiltered: '',
       searchKey: '統編',
       columnsHeader: ['統編', '產品種類', '產品名稱', 'code'],
       columns: [
-        // 不需要sortable
         {
           name: '統編',
           label: '統編',
@@ -206,8 +188,6 @@ export default {
   methods: {
     onRequest (props) {
       const { page, rowsPerPage } = props.pagination, filter = props.filter
-      // this.產品名稱 = null
-      // this.code = null
       this.input.產品種類 = null
       this.input.產品名稱 = null
       this.input.code = null
@@ -221,7 +201,6 @@ export default {
           rowsData = res.data.rowsData
         })
         // emulate server
-        // setTimeout(() => {
         // update rowsCount with appropriate value
         this.rowsData = rowsData
         this.pagination.rowsNumber = this.getRowsNumberCount(filter, rowsData, this.searchKey)
@@ -236,8 +215,6 @@ export default {
         // don't forget to update local pagination object
         this.pagination.page = page
         this.pagination.rowsPerPage = rowsPerPage
-        // this.pagination.sortBy = sortBy
-        // this.pagination.descending = descending
         // ...and turn of loading indicator
         this.loading = false
         // }, 1500)
@@ -247,39 +224,17 @@ export default {
     // SELECT * FROM ... WHERE...LIMIT...
     fetchFromServer (startRow, count, filter, searchKey, rowsData) {
       const data = filter
-        // ? this.original.filter(row => row.name.includes(filter))
-        // : this.original.slice()
         ? rowsData.filter(row => row[searchKey].toString().includes(filter))
         : rowsData.slice()
-      // 需要sortBy嗎？
-      // if (sortBy) {
-      //   const sortFn = sortBy === 'desc'
-      //     ? (descending
-      //       ? (a, b) => (a.name > b.name ? -1 : a.name < b.name ? 1 : 0)
-      //       : (a, b) => (a.name > b.name ? 1 : a.name < b.name ? -1 : 0)
-      //     )
-      //     : (descending
-      //       ? (a, b) => (parseFloat(b[sortBy]) - parseFloat(a[sortBy]))
-      //       : (a, b) => (parseFloat(a[sortBy]) - parseFloat(b[sortBy]))
-      //     )
-      //   data.sort(sortFn)
-      // }
       return data.slice(startRow, startRow + count)
     },
     // emulate 'SELECT count(*) FROM ...WHERE...'
     getRowsNumberCount (filter, rowsData, searchKey) {
       if (!filter) {
-        // return this.original.length
         return rowsData.length
       }
       let count = 0
-      // this.original.forEach((treat) => {
-      //   if (treat.name.includes(filter)) {
-      //     ++count
-      //   }
-      // })
       rowsData.forEach(elem => {
-        // sortBy需再設定
         if (elem[searchKey].toString().includes(filter)) {
           ++count
         }
@@ -385,9 +340,7 @@ export default {
     taxIdNumsFilterFn (val, update) {
       update(() => {
         let datafiltered = this.taxIdNumsFiltered
-        // let { datafiltered, rawData } = this.selectInput.統編
         if (val === '') {
-          // this.selectInput.統編.datafiltered = []
           datafiltered.splice(0, datafiltered.length)
         } else {
           datafiltered = this.selectInput.統編.rawData.filter(
@@ -396,7 +349,6 @@ export default {
           if (datafiltered.length > 5) {
             datafiltered.splice(5, datafiltered.length - 5)
           }
-          // this.filterOptions = filterOptions
           this.taxIdNumsFiltered = datafiltered
         }
       })
@@ -488,7 +440,6 @@ function isExist (rowsData, key, value) {
 <style lang="sass">
 .my-sticky-dynamic
   /* height or max-height is important */
-  // height: 743px
   height: 80vh
   .q-table__top,
   .q-table__bottom,

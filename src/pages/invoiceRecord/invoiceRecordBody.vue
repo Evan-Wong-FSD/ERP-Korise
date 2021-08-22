@@ -244,12 +244,12 @@ export default {
         },
         secondPage: {
           產品種類: undefined,
-          產品名稱: undefined, // use-input: true
-          型號: undefined, // new-value-mode="add-unique", use-input: true
-          數量: undefined, // q-input
-          原價: undefined, // new-value-mode="add-unique", use-input: true
-          議價: undefined, // new-value-mode="add-unique", use-input: true
-          'Project code': undefined, // use-input: false,
+          產品名稱: undefined,
+          型號: undefined,
+          數量: undefined,
+          原價: undefined,
+          議價: undefined,
+          'Project code': undefined,
           blank: undefined
         }
       },
@@ -395,7 +395,6 @@ export default {
         submitOperation: this.submitOperation,
         _id: this.invoiceRecord_id,
         invoiceNumUpdated: this.invoiceNumUpdated,
-        // invoiceRecord: { ...firstPage, ...secondPage }
         invoiceRecord: {
           firstPage: firstPage,
           secondPage: secondPage
@@ -415,8 +414,6 @@ export default {
     },
     getProductClassByTaxIdNum: function (backendData) {
       this.rowData.產品種類 = backendData.productClass
-      console.log('this.rowData.產品種類')
-      console.log(this.rowData.產品種類)
     },
     getFirmNameByProductClass: function (backendData) {
       this.rowData.產品名稱 = backendData.productName
