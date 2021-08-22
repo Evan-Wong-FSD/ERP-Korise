@@ -1,0 +1,104 @@
+@font-face {
+    font-family: Medium500;
+    src: url(F:/project/erp/src/layouts/CSS/Noto_Sans_TC/NotoSansTC-Medium.otf);
+  }
+
+// @font-face {
+//     font-family: Bold700;
+//     src: url(F:/project/erp/src/layouts/CSS/Noto_Sans_TC/NotoSansTC-Bold.otf);
+// }
+
+// @font-face {
+//     font-family: Black900;
+//     src: url(F:/project/erp/src/layouts/CSS/Noto_Sans_TC/NotoSansTC-Black.otf);
+// }
+
+@mixin color ($color) {
+    color: $color
+}
+
+@mixin background-color ($color) {
+    background-color: $color
+}
+
+.header-align-self {
+    align-self: center
+}
+
+.header-flex-container {
+    display: flex;
+    flex-direction: row
+}
+
+// .header-font-color {
+//     @include color(#212121)
+// }
+
+// .header-font-size {
+//     font-size: 2em
+// }
+
+.header-background-color {
+    @include background-color(#ffffff)
+}
+
+// .header-height {
+//     height: 10vh
+// }
+
+// .logo-Size {
+//     object-fit: contain
+// }
+
+// .menu-button-color {
+//     @include color(#212121)
+// }
+
+.main-page-height {
+    height: 894px;
+}
+
+.my-font {
+    &-medium {
+        font-family: 'Medium500';
+    }
+    // &-bold {
+    //     font-family: 'Bold700';
+    // }
+    // &-black {
+    //     font-family: 'Black900';
+    // }
+  }
+
+// .main-background-color {
+//     @include background-color(#fafafa);
+// }
+
+.menu-button {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    margin: 10%;
+    text-transform: capitalize;
+    &-selected {
+        @include background-color(#00bcd4);
+        @include color(#fafafa)
+    };
+    &-non-selected {
+        @include background-color(#fafafa);
+        @include color(#212121)
+    };
+}
+
+.warning {
+    &-title {
+        // background-color: #f44336;
+        text-align: center;
+        position:relative;
+        margin-left:auto;
+        margin-right:auto;
+    }
+    &-msg {
+        background-color: #26c6da;
+    }
+}

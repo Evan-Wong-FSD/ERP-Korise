@@ -1,0 +1,44 @@
+@font-face {
+    font-family: Medium500;
+    src: url(F:/project/erp/src/layouts/CSS/Noto_Sans_TC/NotoSansTC-Medium.otf);
+  }
+
+.bg-mainColor {
+    background: #00bcd4;
+  }
+
+.bg-btn-confirm-color {
+    background: #bac8d3;
+}
+
+.bottle-btn-position {
+    margin-right: 100px;
+}
+
+.border-radius {
+    &-btn-dropdown {
+        border-radius: 1rem;
+    }
+    &-btn {
+        border-radius: 0.5rem;
+    }
+}
+
+.header {
+    &-width {
+        width: 215.124px;
+    }
+    &-underline {
+        border-top: 6px solid #00bcd4;
+        width: 215.124px;
+        margin-top: 10px;
+    }
+}
+
+.my-font-medium {
+    font-family: 'Medium500';
+}
+
+.text-mainColor {
+    color: #00bcd4;
+  }

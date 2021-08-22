@@ -1,0 +1,53 @@
+@font-face {
+    font-family: Medium500;
+    src: url(F:/project/erp/src/layouts/CSS/Noto_Sans_TC/NotoSansTC-Medium.otf);
+  }
+
+// .bar-chart-size {
+//     height: 500px;
+// }
+
+.bg-mainColor {
+    background: #00bcd4;
+}
+
+.brief-status {
+    border-radius: 0.75rem;
+}
+
+.btn-period {
+    &-selected {
+        background-color: #b71c1c
+    }
+    &-non-selected {
+        background-color:#00bcd4  
+    }
+    border-radius: 1rem;
+}
+
+.chart-height {
+    height: 300px;
+}
+
+.header {
+    &-width {
+        width: 215.124px;
+    }
+    &-underline {
+        border-top: 6px solid #00bcd4;
+        width: 215.124px;
+        margin-top: 10px;  
+    }
+}
+
+.my-font-medium {
+    font-family: 'Medium500';
+}
+
+.search-box-width {
+    min-width: 150px;
+}
+
+.text-mainColor {
+    color: #00bcd4;
+  }
