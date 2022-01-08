@@ -29,21 +29,11 @@ const routes = [
         name: '材料資料',
         component: () => import('pages/materialsInform/materialsInformRecord.vue')
       },
-      // {
-      //   path: '/材料資料表單',
-      //   name: '材料資料表單',
-      //   component: () => import('pages/materialsInformSheet.vue')
-      // },
       {
         path: '/廠商資料',
         name: '廠商資料',
         component: () => import('pages/firmInform/firmInformRecord.vue')
       },
-      // {
-      //   path: '/廠商資料表單',
-      //   name: '廠商資料表單',
-      //   component: () => import('pages/firmInformSheet.vue')
-      // },
       {
         path: '/產品種類',
         name: '產品種類',
