@@ -1,9 +1,13 @@
-
 const routes = [
   {
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
     children: [
+      {
+        path: '',
+        name: '登入',
+        component: () => import('pages/Login/Login.vue')
+      },
       {
         path: '/BOM表',
         name: 'BOM表',
