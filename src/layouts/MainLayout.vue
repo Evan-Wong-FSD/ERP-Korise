@@ -67,7 +67,7 @@ export default {
     },
     validateLogin (value) {
       this.loginStatus = value.loginStatus
-      if (value.loginStatus === false) {
+      if (!value.loginStatus) {
         this.$q.notify({
           type: 'negative',
           message: '帳號或密碼錯誤'

@@ -5,7 +5,11 @@
 </template>
 <script>
 export default {
-  name: 'App'
+  name: 'App',
+  mounted () {
+    console.log(333333333)
+    this.$router.push({ name: '登入' })
+  }
 }
 </script>
 
